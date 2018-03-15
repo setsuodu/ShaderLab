@@ -82,3 +82,6 @@ $RECYCLE.BIN/
 *.db
 *.lock
 *.ide
+*.opendb
+.vs/ShaderLab/v15/Server/sqlite3/storage.ide-shm
+*.ide-wal
