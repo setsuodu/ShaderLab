@@ -1,7 +1,7 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Custom/02-SecondShader" {
-	
+Shader "Tutorial/02-SecondShader" {
+
 	SubShader {
 		Pass {
 			CGPROGRAM
@@ -22,7 +22,7 @@ Shader "Custom/02-SecondShader" {
 
 
 			//返回值 函数名(参数:语义):语义 { }
-			float4 vert(float4 v : POSITION):SV_POSITION //float4对矩阵转换提供方便
+			float4 vert(float4 v:POSITION):SV_POSITION //float4对矩阵转换提供方便
 			{
 				//参数的语义，告诉系统要什么（让系统把模型的顶点坐标传递给v）
 				//返回值的语义，告诉系统返回值是什么（返回值是剪裁空间下的顶点坐标）
@@ -57,6 +57,8 @@ Shader "Custom/02-SecondShader" {
 				//SV_Target语义，对应盘面上的颜色
 				fixed4 col = fixed4(0.5,0.5,1,1);
 				return col;
+
+				//return _Color;
 			}
 
 

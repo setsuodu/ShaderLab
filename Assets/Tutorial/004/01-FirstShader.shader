@@ -1,4 +1,4 @@
-﻿Shader "Custom/01-FirstShader" {
+﻿Shader "Tutorial/01-FirstShader" {
 	
 	//属性
 	Properties {
