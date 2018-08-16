@@ -19,5 +19,4 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 0.5, a: 1}
+    m_Colors: []

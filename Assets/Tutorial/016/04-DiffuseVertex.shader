@@ -1,46 +1,67 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
 Shader "Tutorial/04-DiffuseVertex" {
+
+	Properties {
+		_Diffuse("Diffuse Color", Color)=(0.5,0.7,0.6,1)
+	}
 
 	SubShader {
 		Pass {
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
+			Tags {
+				"LightMode"="ForwardBase"
+			}
 
-			// 结构体作参数，封装属性
-			// application to vertex
+			CGPROGRAM
+		#include "Lighting.cginc" //取得第一个直射光的颜色（多个光时另外处理） _LightColor0
+		#pragma vertex vert
+		#pragma fragment frag
+
+			fixed3 _Diffuse; //
+
 			struct a2v {
-				float4 vertex:POSITION; //坐标，旋转用float4。必须用语言，让操作系统给参数传值。模型空间的坐标传给vertex
-				float3 normal:NORMAL; //方向是向量float3表示。模型空间的法线方向传给normal
-				float4 texcoord:TEXCOORD0; //第0套uv，0~1是有效范围。让os把第0套纹理坐标传给texcoord
+				float4 vertex:POSITION;
+				float3 normal:NORMAL; //模型空间
 			};
 			
-			// 顶点函数的返回值，返回值必须有语义，不然系统不知道如何处理
-			// vertex to fragment
 			struct v2f {
-				float4 position:SV_POSITION; //os会把position作为顶点在剪裁空间的坐标。
-				//传递法线，定义一个float3
-				float3 temp:COLOR0; //NORMAL在片元函数中取不到，所以转存到COLOR0中，传递给片元函数
+				float4 position:SV_POSITION;
+				fixed3 color:COLOR;
 			};
 
 			v2f vert(a2v v) {
 				v2f f;
 				f.position = UnityObjectToClipPos(v.vertex);
-				f.temp = v.normal; //把法线信息，存储到结构体中
+
+				//cos(x) = 光的方向·法线方向
+				//normalize用来把一个向量单位化（方向不变，长度变为1，用fixed保存）
+				fixed3 lightDir = normalize(_WorldSpaceLightPos0.xyz); //第一个直射光的位置（对直射光而言，位置就是方向）世界空间
+				
+				//mul(_World2Object,向量) 是从模型空间转换到世界空间
+				//mul(向量,_World2Object) 可以让语义实现反向的效果
+				fixed3 normalDir = mul(v.normal, (float3x3)unity_WorldToObject); //mul的参数，位数要一致
+
+				 //暂不处理透明度a
+				fixed3 diffuse = _LightColor0.rgb * max(0, dot(lightDir, normalDir)); //空间要相同，统一到世界空间
+				fixed3 mul_light = diffuse * _Diffuse.rgb; //两个颜色相乘叠加，Multipy，亮度变暗，红*绿=黑。
+
+				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.rgb;
+				fixed3 add_env = mul_light + ambient;
+
+				//通过结构体的中间变量，传递到片元函数中显示
+				f.color = add_env;
+
 				return f;
 			}
 			
-			// 014 顶点、片元函数间的数据传递
-			// 有些语义只能在顶点函数中使用，有些语义只能在片元函数中使用，取不到会报错
-			// 类型 函数名(传入的参数的类型 传入的值):返回值语义
 			fixed4 frag(v2f f):SV_Target {
-				//fixed4 col = fixed4(0.5,0.5,1,1);
-				fixed4 col = fixed4(f.temp,1); //顶点函数中只给模型顶点赋了颜色值，相邻顶点间的像素是os通过差值计算出来的
+				//fixed4 col = fixed4(1,1,1,1);
+				fixed4 col = fixed4(f.color,1);
 				return col;
 			}
 
 			ENDCG
 		}
 	}
-	FallBack "VertexLit"
+	FallBack "Diffuse"
 }
