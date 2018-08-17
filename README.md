@@ -1,5 +1,15 @@
 ### ShaderLab Repository
 
-#### 说明
+### Part.I
 
-本仓库主要搬运国内外论坛、视频网站教学中实现的shader效果，做一个整理。为保证作者权益，所有转载都标注了出处。
+|Name|Instructions|
+|---|---|
+|BattleTransitions|口袋妖怪转场效果|
+|CutoutMasks|透明贴图|
+|CutPixelByDistance|距离摄像机近的点，自动透明|
+|Heatmaps|热力图|
+|HoleThrough|局部透视效果|
+|MaterialStyle|仿安卓Material风格波纹|
+|PixelShader|马赛克效果，渐进式加载|
+|Scanner|扫描线|
+|Stencil|擦除|
