@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Custom/HoleThrough" {
+Shader "Custom/HoleThroughCricle" {
     Properties {
         _HolePos("HolePos",vector) = (1,1,1,1)
         _HoleSize("HoleSize",Range(0,10)) = 1
@@ -42,7 +42,7 @@ Shader "Custom/HoleThrough" {
 
                 float dist = distance(pos, float2(_HolePos.x, _HolePos.y));
                 if(dist < _HoleSize) {
-                    clip(-1.0);
+                    clip(-1.0); //抛弃小于零的像素
                 } else if(dist < _HoleSize + _BlurThick){
                     col.a = (dist - _HoleSize) * 10.0;
                     col.a = pow(col.a, 2.0);
