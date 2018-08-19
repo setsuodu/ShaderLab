@@ -4,7 +4,7 @@
 
 // Alan Zucconi
 // www.alanzucconi.com
-Shader "example/Heatmap" 
+Shader "Custom/Heatmap" 
 {
 	Properties
 	{
