@@ -1,4 +1,4 @@
-﻿Shader "Custom/Wave"   
+﻿Shader "Custom/MaterialStyle"   
 {
     Properties
     {
@@ -7,6 +7,7 @@
         _Point1("Point1", vector) = (100, 100, 0, 0)
 		_Radius("Radius", range(0, 50000)) = 0
     }
+
     SubShader
     {
         Pass
@@ -14,13 +15,13 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
             #include "UnityCG.cginc"
 
             struct appdata
             {    
                 float4 vertex : POSITION;
             };
+
             struct v2f
             {    
                 float4 vertex : SV_POSITION;
@@ -36,6 +37,7 @@
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 return o;
             }
+
             fixed4 frag (v2f i) : SV_Target
             {
                 if(pow((i.vertex.x - _Point1.x), 2) + pow((i.vertex.y - _Point1.y), 2) < _Radius) //set area to draw wave
@@ -44,6 +46,7 @@
                 }
                 return fixed4(1, 1, 1, 1); //set background color
             }
+
             ENDCG
         }
     }

@@ -1,4 +1,4 @@
-﻿Shader "Custom/ScannerShader"
+﻿Shader "Custom/Scanner"
 {
 	Properties
     {
@@ -8,8 +8,9 @@
         _EdgeColor ("Edgge Color", Color) = (0,0,0,1)
         _BackgroundColor ("Background Color",Color) = (1,1,1,0)
         _Thickness ("Thickness",Float) = 1.0
-		_Speed("Speed",Range(-1,0))=-0.5
+		_Speed("Speed",Range(-1,0)) = -0.5
     }
+
     SubShader
     {
         Tags { "RenderType"="Opaque" }
@@ -148,4 +149,6 @@
             ENDCG
         }
     }
+
+	FallBack "Standard"
 }

@@ -13,7 +13,9 @@ Shader "Custom/PixelShader"
 	SubShader
 	{
 		// No culling or depth
-		Cull Off ZWrite Off ZTest Always
+		Cull Off
+		ZWrite Off
+		ZTest Always
 
 		Pass
 		{
@@ -33,6 +35,12 @@ Shader "Custom/PixelShader"
 				half2 uv : TEXCOORD0;
 				half4 vertex : SV_POSITION;
 			};
+			
+			sampler2D _MainTex;
+			half _PixelWidth;
+			half _PixelHeight;
+			half _ScreenWidth;
+			half _ScreenHeight;
 
 			v2f vert(appdata v)
 			{
@@ -41,12 +49,6 @@ Shader "Custom/PixelShader"
 				o.uv = v.uv;
 				return o;
 			}
-
-			sampler2D _MainTex;
-			half _PixelWidth;
-			half _PixelHeight;
-			half _ScreenWidth;
-			half _ScreenHeight;
 
 			fixed4 frag(v2f i) : SV_Target
 			{
@@ -57,6 +59,7 @@ Shader "Custom/PixelShader"
 				col = tex2D(_MainTex, coord);
 				return col;
 			}
+
 			ENDCG
 		}
 	}
