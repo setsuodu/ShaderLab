@@ -38,13 +38,13 @@ Shader "Tutorial/02-SecondShader" {
 				//UnityCG.cginc中一些常用的函数
 				//摄像机方向（视角方向）
 				//float3 WorldSpaceViewDir(float4 v); //根据模型空间中的顶点坐标，得到世界空间从这个点到摄像机的观察方向
-				//float3 UnityWorldSpaceViewDir(float4 v); //世界空间中的顶点坐标->世界空间从这个点到摄像机的观察方向
-				//float3 ObjSpaceViewDir(float4 v);  //模型空间中的顶点坐标->模型空间从这个点到摄像机的观察方向
+				//float3 UnityWorldSpaceViewDir(float4 v); //世界空间中的顶点坐标 ==>> 世界空间从这个点到摄像机的观察方向
+				//float3 ObjSpaceViewDir(float4 v);  //模型空间中的顶点坐标 ==>> 模型空间从这个点到摄像机的观察方向
 
 				//光源方向
-				//float3 WorldSpaceLightDir(float4 v); //
-				//float3 UnityWorldSpaceLightDir(float4 v); //
-				//float3 ObjSpaceLightDir(float4 v); //
+				//float3 WorldSpaceLightDir(float4 v); //模型空间顶点坐标 ==>> 世界空间从这个点到光源的方向
+				//float3 UnityWorldSpaceLightDir(float4 v); //世界空间顶点坐标 ==>> 世界空间从这个点到光源的方向
+				//float3 ObjSpaceLightDir(float4 v); //模型空间顶点坐标 ==>> 模型空间中从这个点到光源的方向
 
 				//方向转换
 				//float3 UnityObjectToWorldNormal(float3 norm); //把法线从 模型空间->世界空间
