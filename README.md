@@ -14,7 +14,7 @@
 |√|Scanner|扫描线|
 |√|Stencil|擦除|
 |√|LitDissolve|切换|
-|-|Wireframe|线框效果|
+|√|Wireframe|线框效果|
 |-|Glow|自发光，轮廓光，穿墙轮廓|
 |-|Wave|顶点运动模拟波浪|
 |-|Leaf|树叶自然飘动|
