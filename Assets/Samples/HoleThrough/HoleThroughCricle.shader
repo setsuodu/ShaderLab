@@ -1,20 +1,23 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "Custom/HoleThroughCricle" {
-    Properties {
+    Properties
+	{
         _HolePos("HolePos",vector) = (1,1,1,1)
         _HoleSize("HoleSize",Range(0,10)) = 1
         _BlurThick("BlurThick",Range(0,10)) = 1
         _MainColor("MainColor",Color) = (1,1,1,1)
     }
 
-    SubShader {
+    SubShader 
+	{
         Tags {"Queue" = "Transparent" "RenderType" = "Transparent"}
         ZWrite On
         ZTest LEqual
         Blend SrcAlpha OneMinusSrcAlpha
 
-        Pass {
+        Pass
+		{
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -23,22 +26,31 @@ Shader "Custom/HoleThroughCricle" {
             uniform float4 _HolePos;
             uniform float _BlurThick;
             uniform float4 _MainColor;
+			
+            struct a2v
+			{
+				float4 pos : POSITION;
+				float2 uv : TEXCOORD0;
+            };
 
-            struct v2f {
+            struct v2f
+			{
                 float4 wPos : SV_POSITION;
                 float2 uv : TEXCOORD0;
             };
 
-            v2f vert(float4 pos : POSITION ,float2 uv : TEXCOORD0) {
+            v2f vert(a2v v)
+			{
                 v2f output;
-                output.wPos = UnityObjectToClipPos(pos);
-                output.uv = uv;
+                output.wPos = UnityObjectToClipPos(v.pos);
+                output.uv = v.uv;
                 return output;
             }
 
-            float4 frag(v2f input) : SV_TARGET {
+            float4 frag(v2f f) : SV_TARGET 
+			{
                 half4 col = _MainColor;
-                float2 pos = input.uv;
+                float2 pos = f.uv;
 
                 float dist = distance(pos, float2(_HolePos.x, _HolePos.y));
                 if(dist < _HoleSize) {

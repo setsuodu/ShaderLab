@@ -54,7 +54,6 @@ Shader "Custom/Heatmap"
 				{
 					// Calculates the contribution of each point
 					half di = distance(output.worldPos, _Points[i].xyz);
-
 					half ri = _Properties[i].x;
 					half hi = 1 - saturate(di / ri);
 

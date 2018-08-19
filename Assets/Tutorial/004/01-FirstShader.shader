@@ -1,7 +1,8 @@
-﻿Shader "Tutorial/01-FirstShader" {
-	
+﻿Shader "Tutorial/01-FirstShader" 
+{
 	//属性
-	Properties {
+	Properties
+	{
 		//_变量名(Inspector中显示的名字, 类型)=赋值
 		//_是命名习惯
 		_Color ("Color", Color) = (1,1,1,1) //_Color变量名与VertexLit中耦合了，所以可以影响效果
@@ -19,12 +20,13 @@
 	//显卡运行时，优先执行前面的。
 	//第一个SubShader的效果都支持，就使用第一个。
 	//某些效果实现不了，就自动运行下一个SubShader。
-	SubShader {
-		
+	SubShader
+	{
 		//可以有多个Pass块，至少有一个
 		//类似C#的function（方法）
 		//Pass中编写实际的Shader代码
-		Pass {
+		Pass 
+		{
 			CGPROGRAM
 			//使用CG语言编写Shader
 
