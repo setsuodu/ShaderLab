@@ -17,6 +17,8 @@
 |√|Wireframe|线框效果|
 |√|Fresnel|菲涅尔|
 |√|Wave|顶点运动模拟波浪|
+|√|GaussianBlur|高斯模糊|
+|√|RadialBlur|径向模糊|
 |-|Glow|自发光，轮廓光，穿墙轮廓|
 |-|Leaf|树叶自然飘动|
 |-|Dissolve|消融|
