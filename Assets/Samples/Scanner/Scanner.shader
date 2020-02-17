@@ -3,12 +3,12 @@
 	Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _MaskTex("MaskTex", 2D) = "white" {}
+        _MaskTex("Mask", 2D) = "white" {}
         _EdgeOnly ("Edge Only", Float) = 1.0
         _EdgeColor ("Edgge Color", Color) = (0,0,0,1)
-        _BackgroundColor ("Background Color",Color) = (1,1,1,0)
-        _Thickness ("Thickness",Float) = 1.0
-		_Speed("Speed",Range(-1,0)) = -0.5
+        _BackgroundColor ("Background Color", Color) = (1,1,1,0)
+        _Thickness ("Thickness", Float) = 1.0
+		_Speed("Speed", Range(-1,0)) = -0.5
     }
 
     SubShader
@@ -94,17 +94,17 @@
 
             half Sobel(v2f i)
             {
-                const half Gx[9] = {-1,-2,-1,0,0,0,1,2,1};
+                const half Gx[9] = { -1,-2,-1,0,0,0,1,2,1 };
                 const half Gy[9] = { -1,0,1,-2,0,2,-1,0,1 };
 
                 half texColor;
                 half edgeX = 0;
                 half edgeY = 0;
-                for (int it = 0; it < 9; it++)
+                for (int t = 0; t < 9; t++)
                 {
-                    texColor = luminance(tex2D(_MainTex, i.uv[it]));
-                    edgeX += texColor * Gx[it];
-                    edgeY += texColor * Gy[it];
+                    texColor = luminance(tex2D(_MainTex, i.uv[t]));
+                    edgeX += texColor * Gx[t];
+                    edgeY += texColor * Gy[t];
                 }
 
                 half edge = 1 - abs(edgeX) - abs(edgeY);
@@ -118,7 +118,7 @@
 
                 half2 uv = v.uv;
                 
-                o.maskuv = v.uv + frac(fixed2(0,_Speed * _Time.y));
+                o.maskuv = v.uv + frac(fixed2(0,_Speed * _Time.y)); //取小数部分
 				//o.maskuv = v.uv + fixed2(0.7 * _Time.y,0);
 
                 o.uv[0] = uv + _MainTex_TexelSize.xy * half2(-1, -1) * _Thickness;
@@ -136,11 +136,11 @@
             
             fixed4 frag (v2f i) : SV_Target
             {
-                half edge = Sobel(i);
+                half edge = Sobel(i); //逐像素使用索贝尔算子
                 
                 fixed4 maskColor = tex2D(_MaskTex, i.maskuv);
 
-                fixed4 withEdgeColor = lerp(_EdgeColor,tex2D(_MainTex, i.uv[4]),edge);
+                fixed4 withEdgeColor = lerp(_EdgeColor, tex2D(_MainTex, i.uv[4]), edge);
                 fixed4 onlyEdgeColor = lerp(_EdgeColor, _BackgroundColor, edge);
 
                 fixed4 col = lerp(withEdgeColor, onlyEdgeColor, _EdgeOnly);

@@ -45,7 +45,6 @@
 			[maxvertexcount(3)]
 			void geom(triangle v2g IN[3], inout TriangleStream<g2f> triStream)
 			{
-			
 				float2 WIN_SCALE = float2(_ScreenParams.x/2.0, _ScreenParams.y/2.0);
 				
 				//frag position
@@ -75,7 +74,6 @@
 				OUT.uv = IN[2].uv;
 				OUT.dist = float3(0,0,area/length(v2));
 				triStream.Append(OUT);
-				
 			}
 			
 			half4 frag(g2f IN) : COLOR
@@ -89,9 +87,7 @@
 			}
 			
 			ENDCG
-
     	}
 	}
-
 	FallBack "Specular"
 }
