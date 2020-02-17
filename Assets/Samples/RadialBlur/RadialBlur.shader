@@ -1,5 +1,5 @@
-﻿Shader "Custom/RadialBlur" {
-
+﻿Shader "Blur/RadialBlur" 
+{
     Properties {
          _MainTex ("Base (RGB)", 2D) = "white" {}
          _fSampleDist("SampleDist", Float) = 1 //采样距离
@@ -10,7 +10,7 @@
         Pass {
             ZTest Always
             Cull Off
-            ZWrite Off
+            //ZWrite Off
             Fog { Mode Off }
 
             CGPROGRAM

@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Custom/GaussianBlur"
+Shader "Blur/GaussianBlur"
 {
     Properties
     {
@@ -71,8 +71,8 @@ Shader "Custom/GaussianBlur"
         Pass
         {
             Name "HORIZONTAL"
-            ZTest Always
-            ZWrite Off
+            //ZTest Always
+            //ZWrite Off
             Cull Off
 
             CGPROGRAM
@@ -84,16 +84,16 @@ Shader "Custom/GaussianBlur"
         Pass
         {
             Name "VERTICAL"
-            ZTest Always
-            ZWrite Off
+            //ZTest Always
+            //ZWrite Off
             Cull Off
 
             CGPROGRAM
+            #pragma vertex vertHorizontal
             #pragma vertex vertVertical
             #pragma fragment frag
             ENDCG
         }
     }
-
     Fallback Off
 }

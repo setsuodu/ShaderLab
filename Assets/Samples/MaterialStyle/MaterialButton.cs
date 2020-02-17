@@ -15,7 +15,7 @@ public class MaterialButton : MonoBehaviour,
 
     void Awake()
     {
-        mat = new Material(Shader.Find("Custom/Wave"));
+        mat = new Material(Shader.Find("Custom/MaterialStyle"));
         GetComponent<Image>().material = mat;
     }
 

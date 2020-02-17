@@ -1,4 +1,4 @@
-﻿Shader "Custom/Wave" 
+﻿Shader "Custom/VertexWave" 
 {
 	Properties
 	{
