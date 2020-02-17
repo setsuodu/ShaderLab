@@ -17,6 +17,10 @@
             #pragma fragment frag
             #include "UnityCG.cginc"
 
+            float4 _Color;
+            float4 _Point1;
+            float _Radius;
+
             struct appdata
             {    
                 float4 vertex : POSITION;
@@ -27,10 +31,6 @@
                 float4 vertex : SV_POSITION;
             };
 			
-            float4 _Color;
-            float4 _Point1;
-			float _Radius;
-
             v2f vert (appdata v)
             {
                 v2f o;

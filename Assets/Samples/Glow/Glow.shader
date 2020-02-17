@@ -10,7 +10,6 @@
 
 	SubShader
 	{
-
 		Pass 
 		{
 			Tags { "LightMode" = "ForwardBase" }

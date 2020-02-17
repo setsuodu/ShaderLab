@@ -4,16 +4,16 @@
     {
         _MainTex("Main", 2D) = "white"{}
         _Outline("Outline Color", Color) = (0.1,0.1,0.1,0.1)
+        _Width("Width", Range(0, 0.1)) = 0.05
     }
 
     SubShader
     {
         Tags { "RenderType" = "Opaque" }
-        LOD 100
 
         Pass //第一个Pass绘制背景填充
         {
-            Cull Front //剔除前景色
+            Cull Front //剔除前景色，让前景内容可以显示
 
             CGPROGRAM
             #pragma vertex vert
@@ -22,6 +22,7 @@
             #include "UnityCG.cginc"
 
             fixed4 _Outline;
+            fixed _Width;
 
             struct appdata
             {
@@ -31,25 +32,24 @@
 
             struct v2f
             {
-                float4 vertex : SV_POSITION;
+                float4 vertex : SV_POSITION; //把渲染模型到屏幕上的指定位置，剪裁空间中的顶点坐标
             };
 
             v2f vert(appdata v)
             {
                 v2f o;
-                v.vertex += float4(v.normal * 0.04f, 0);
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                v.vertex += float4(v.normal * _Width, 0); //沿法线向外扩张
+                o.vertex = UnityObjectToClipPos(v.vertex); //即 UNITY_MATRIX_MVP，物体坐标转世界坐标
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_Target
+            fixed4 frag(v2f i) : SV_Target //输出到屏幕上的颜色
             {
                 fixed4 col = _Outline;
                 return col;
             }
             ENDCG
         }
-
         Pass //第二个Pass绘制前景
         {
             Cull Back //剔除背景色
@@ -65,7 +65,7 @@
             struct appdata
             {
                 float4 vertex : POSITION;
-                float3 normal : NORMAL;
+                float3 normal : NORMAL; //用来接收光照
                 float2 uv : TEXCOORD0;
             };
 
@@ -79,8 +79,8 @@
             v2f vert(appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.normal = UnityObjectToWorldNormal(v.normal);
+                o.vertex = UnityObjectToClipPos(v.vertex);      //转屏幕坐标
+                o.normal = UnityObjectToWorldNormal(v.normal);  //转世界坐标
                 o.uv = v.uv;
                 return o;
             }
