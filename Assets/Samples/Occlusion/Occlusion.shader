@@ -6,7 +6,7 @@
         _Width("Occlusion Width", Range(0, 10)) = 1
         _Intensity("Occlusion Intensity",Range(0, 10)) = 1
 
-        _Albedo("Albedo", 2D) = "white"{}
+        _MainTex("MainTex", 2D) = "white"{}
     }
 
     SubShader
@@ -57,22 +57,45 @@
             ENDCG
         }
 
-        CGPROGRAM
-        #pragma surface surf StandardSpecular
-
-        struct Input
+        Pass
         {
-            float2 uv_Albedo;
-        };
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
 
-        sampler2D _Albedo;
+            #include "UnityCG.cginc"
 
-        void surf(Input IN, inout SurfaceOutputStandardSpecular o)
-        {
-            o.Albedo = tex2D(_Albedo, IN.uv_Albedo).rgb;
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+            };
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                UNITY_FOG_COORDS(1)
+                float4 vertex : SV_POSITION;
+            };
+
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+
+            v2f vert(appdata v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                fixed4 col = tex2D(_MainTex, i.uv);
+                return col;
+            }
+            ENDCG
         }
-
-        ENDCG
     }
     Fallback "Diffuse"
 }
