@@ -5,8 +5,8 @@ Shader "Custom/FresnelReflections"
 	{
 		_MainTint("Diffuse Tint", Color) = (1,1,1,1)
 		_MainTex("Base (RGB)", 2D) = "white" {}
-	_Cubemap("Cubemap", CUBE) = ""{}
-	_ReflectionAmount("Reflection Amount", Range(0,1)) = 1
+		_Cubemap("Cubemap", CUBE) = ""{}
+		_ReflectionAmount("Reflection Amount", Range(0,1)) = 1
 		_RimPower("Fresnel Falloff", Range(0.1, 8)) = 2
 		_SpecColor("Specular Color", Color) = (1,1,1,1)
 		_SpecPower("Specular Power", Range(0,1)) = 0.5

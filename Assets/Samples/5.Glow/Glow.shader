@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_Color("Color", Color) = (1,0.6,0,1)
+		_Color("Color", Color) = (1, 0.6, 0, 1)
 		_GlowColor("Glow Color", Color) = (1,1,0,1)
 		_Strength("Glow Strength", Range(5.0, 1.0)) = 2.0
 		_GlowRange("Glow Range", Range(0.1,1)) = 0.6
